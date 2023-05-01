@@ -220,6 +220,11 @@ class EmojiPickerCollectionView: UICollectionView {
             return []
         }
 
+        if searchText.count == 1,
+           let searchEmoji = EmojiWithSkinTones(rawValue: searchText)?.baseEmoji {
+            return allSendableEmoji.filter { $0.baseEmoji == searchEmoji }
+        }
+
         return allSendableEmoji.filter { emoji in
             let terms = emojiSearchIndex?[emoji.baseEmoji.rawValue] ?? [emoji.baseEmoji.name]
             for term in terms {
